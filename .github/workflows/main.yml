@@ -1,0 +1,17 @@
+name: My First Workflow
+
+on:
+  push:
+    branches:
+      - main  # Change this to the branch you want to trigger the workflow
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run a script
+      run: echo "Hello, Littles Law!"
