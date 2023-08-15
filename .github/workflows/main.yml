@@ -15,4 +15,11 @@ jobs:
 
     - name: Run a script
       run: echo "Hello, Littles Law!"
-      echo "Current UTC time: $CURRENT_HOUR:$CURRENT_MINUTE"
+    - name: Print a message
+      run: |
+        CURRENT_HOUR=$(date -u '+%H')
+        CURRENT_MINUTE=$(date -u '+%M')
+
+          if [ "$CURRENT_HOUR" -eq 23 ] && [ "$CURRENT_MINUTE" -ge 45 ]; then
+            echo "Current UTC time: $CURRENT_HOUR:$CURRENT_MINUTE"
+
