@@ -34,6 +34,6 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 'API Health Check Failed'
           body: 'The API health check failed. Please investigate.'
-          to: ${{ secrets.RECIPIENT_EMAIL }}
-          from: ${{ secrets.EMAIL_USERNAME }}
+          to: 'vasanthtce@gmail.com'
+          from: 'vasanthtce@gmail.com'
           starttls: true
