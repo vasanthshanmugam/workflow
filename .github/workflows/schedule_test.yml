@@ -23,5 +23,3 @@ jobs:
             exit 1
           fi
 
-      - name: Set API status output
-        run: echo "API Status: ${{ steps.api_check.outputs.status }}"
