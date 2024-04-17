@@ -1,0 +1,52 @@
+name: API Health Check and Email Notification
+
+on:
+  schedule:
+    - cron: '45 23 * * *'  # Schedule to run at 11:45 PM UTC
+
+jobs:
+  api_health_check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Hit API and check response
+        id: api_check
+        run: |
+          response=$(curl -s https://petstore.octoperf.com/actions/Catalog.action?viewProduct=&productId=FI-SW-01)
+          if [ -n "$response" ]; then
+            echo "::set-output name=status::pass"
+            echo "API is up and running"
+            echo "Response: $response"
+          else
+            echo "::set-output name=status::fail"
+            echo "API is down or not responding"
+            exit 1
+          fi
+
+      - name: Send email notification
+        if: steps.api_check.outputs.status == 'fail'
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -d '{
+              "personalizations": [
+                {
+                  "to": [
+                    {
+                      "email": "recipient@example.com"
+                    }
+                  ],
+                  "subject": "API Health Check Failed"
+                }
+              ],
+              "from": {
+                "email": "sender@example.com"
+              },
+              "content": [
+                {
+                  "type": "text/plain",
+                  "value": "The API health check failed. Please investigate."
+                }
+              ]
+            }' \
+            https://api.sendgrid.com/v3/mail/send
