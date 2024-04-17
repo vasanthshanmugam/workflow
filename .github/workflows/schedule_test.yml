@@ -3,6 +3,7 @@ name: API Health Check and Email Notification
 on:
   schedule:
     - cron: '45 23 * * *'  # Schedule to run at 11:45 PM UTC
+  workflow_dispatch:  # Allow manual triggering of the workflow
 
 jobs:
   api_health_check:
@@ -33,14 +34,14 @@ jobs:
                 {
                   "to": [
                     {
-                      "email": "recipient@example.com"
+                      "email": "vasanthtce@gmail.com"
                     }
                   ],
                   "subject": "API Health Check Failed"
                 }
               ],
               "from": {
-                "email": "sender@example.com"
+                "email": "vasanthtce@gmail.com"
               },
               "content": [
                 {
