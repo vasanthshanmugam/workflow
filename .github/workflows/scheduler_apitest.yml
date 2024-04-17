@@ -13,7 +13,7 @@ jobs:
       - name: Hit API and check response
         id: api_check
         run: |
-          response=$(curl -s https://petstore.octoperf.com/actions/Catalog.action?viewProduct=&productId=FI-SW-01)
+          response=$(curl -s https://petstore.octoperf.com/actions/Caog.action?viewProduct=&productId=FI-SW-01)
           if [ -n "$response" ]; then
             echo "::set-output name=status::pass"
             echo "API is up and running"
