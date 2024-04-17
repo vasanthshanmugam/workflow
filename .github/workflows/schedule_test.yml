@@ -1,4 +1,4 @@
-name: API Health Check and Email Notification
+name: API Health Check
 
 on:
   schedule:
@@ -15,25 +15,9 @@ jobs:
         run: |
           response=$(curl -s https://petstore.octoperf.com/actions/Catalog.action?viewProduct=&productId=FI-SW-01)
           if [ -n "$response" ]; then
-            echo "::set-output name=status::pass"
             echo "API is up and running"
             echo "Response: $response"
           else
-            echo "::set-output name=status::fail"
             echo "API is down or not responding"
             exit 1
           fi
-
-      - name: Send email notification
-        if: steps.api_check.outputs.status == 'fail'
-        uses: dawidd6/action-send-mail@v2
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: 'API Health Check Failed'
-          body: 'The API health check failed. Please investigate.'
-          to: 'vasanthtce@gmail.com'
-          from: 'vasanthtce@gmail.com'
-          starttls: true
