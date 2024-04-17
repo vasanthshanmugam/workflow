@@ -9,16 +9,21 @@ jobs:
   api_health_check:
     runs-on: ubuntu-latest
 
+
     steps:
       - name: Hit API and check response
         id: api_check
         run: |
           response=$(curl -s https://petstore.octoperf.com/actions/Caog.action?viewProduct=&productId=FI-SW-01)
-          if [ -n "$response" ]; then
-            echo "::set-output name=status::pass"
-            echo "API is up and running"
-          else
+          if [ -z "$response" ]; then
             echo "::set-output name=status::fail"
             echo "API is down or not responding"
             exit 1
+          elif [[ "$response" == *"404 Not Found"* ]]; then
+            echo "::set-output name=status::fail"
+            echo "API endpoint not found"
+            exit 1
+          else
+            echo "::set-output name=status::pass"
+            echo "API is up and running"
           fi
