@@ -2,7 +2,7 @@ name: Scheduled GitHub Workflow
 
 on:
   schedule:
-    - cron: '54 23 * * *'  # Schedule to run at 11:45 PM UTC
+    - cron: '54 22 * * *'  # Schedule to run at 11:45 PM UTC
 
 jobs:
   build:
