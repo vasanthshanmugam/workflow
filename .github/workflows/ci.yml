@@ -1,0 +1,40 @@
+name: Terraform CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step to check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step to set up Terraform CLI
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.2.0 # Adjust this version as needed
+
+      # Step to format Terraform files
+      - name: Terraform Format
+        run: terraform fmt -check
+
+      # Step to validate Terraform files
+      - name: Terraform Validate
+        run: terraform validate
+
+      # Step to initialize Terraform
+      - name: Terraform Init
+        run: terraform init
+
+      # Step to plan Terraform
+      - name: Terraform Plan
+        run: terraform plan
