@@ -3,6 +3,13 @@ name: Scheduled GitHub Workflow
 on:
   schedule:
     - cron: '54 22 * * *'  # Schedule to run at 11:45 PM UTC
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: 'The branch to run the workflow'
+        required: true
+        default: 'main'
+        type: string
 
 jobs:
   build:
